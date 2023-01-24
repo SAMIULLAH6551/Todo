@@ -4,11 +4,10 @@ import 'package:email_validator/email_validator.dart';
 class LoginProvider with ChangeNotifier{
    bool? emailElegible;
    bool? passwordElegible;
-   String? emailMessage;
-   String? passwordMessage;
+   String? emailMessage = "";
+   String? passwordMessage = "";
 
    void emailValidation(String email){
-
      if(EmailValidator.validate(email)){
        emailElegible = true;
        emailMessage = "ok";
@@ -19,7 +18,6 @@ class LoginProvider with ChangeNotifier{
        notifyListeners();
      }
    }
-
 
    void passwordVallidation(String password){
      if (password.length < 8) {

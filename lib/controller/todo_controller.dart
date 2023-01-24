@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:todo/extentions/extentions.dart';
 import 'package:todo/utils/message_box.dart';
@@ -51,6 +50,22 @@ class TodoController extends GetxController{
     }).onError((error, stackTrace){
       utils.snackBarMessage("Error", error.toString());
     });
+  }
+
+
+  void updateNote(String doc,title,description, bool status){
+    firestore.collection('Todo').doc(doc).update({
+
+      "Completed" : status,
+      "CreationDate" : DateTime.now().customDate(),
+      "Title" : title,
+      "Description" : description
+    }).then((value){
+      utils.snackBarMessage("Success", "Note Updated Successfully");
+    }).onError((error, stackTrace){
+      utils.snackBarMessage("Error", error.toString());
+    });
+
   }
 
   Stream<QuerySnapshot<Map<String,dynamic>>> getTodayTodo(){

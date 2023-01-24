@@ -6,7 +6,6 @@ import 'package:todo/constants/color_constant.dart';
 import 'package:todo/providers/login_screen_provider.dart';
 import 'package:todo/view/splash/splash_screen.dart';
 
-
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -17,8 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider<LoginProvider>(create: (context)=> LoginProvider()),
-    ],
+      ChangeNotifierProvider(create: (context)=> LoginProvider()),
+    ]
+    ,
     child: GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Todo',

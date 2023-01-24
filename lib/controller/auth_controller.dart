@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/extentions/extentions.dart';
+import 'package:todo/providers/login_screen_provider.dart';
 import 'package:todo/utils/message_box.dart';
 import 'package:todo/view/home/home_screen.dart';
 import '../view/login/login_screen.dart';
@@ -27,7 +29,6 @@ class AuthController extends GetxController{
    }).onError((error, stackTrace){
      utils.snackBarMessage("Error", error.toString());
    });
-   update();
   }
 
   void loginUser(String email,password){
@@ -58,6 +59,7 @@ class AuthController extends GetxController{
 
     }else{
       Timer(const Duration(seconds: 3), () {
+        ChangeNotifierProvider<LoginProvider>(create: (context)=> LoginProvider(),);
         Get.off(LoginScreen());
       });
     }

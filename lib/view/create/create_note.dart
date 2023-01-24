@@ -46,8 +46,14 @@ class CreateNote extends StatelessWidget {
               color: ColorConstant.green,
             ),),
             const SizedBox(height: 30,),
-            TextFieldWidget(controller: title, hintText: 'Enter Your Title', onchanged: (String ) { }, action: TextInputAction.next,),
-            TextFieldWidget(controller: description,maxlines: 4,hintText: 'Enter Description', onchanged: (String ) {  }, action: TextInputAction.done,),
+            TextFieldWidget(
+              suffix: "",
+              secureText: false,
+              controller: title, hintText: 'Enter Your Title', onchanged: (String ) { }, action: TextInputAction.next,),
+            TextFieldWidget(
+              suffix: "",
+              secureText: false,
+              controller: description,maxlines: 4,hintText: 'Enter Description', onchanged: (String ) {  }, action: TextInputAction.done,),
 
             const SizedBox(height: 10,),
             ElevatedButtonWidget(child: const Text('Add to List'), function: () {

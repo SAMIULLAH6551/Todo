@@ -1,4 +1,5 @@
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:todo/view/all_tasks/see_all_tasks.dart';
 import 'package:todo/view/login/login_screen.dart';
 import '../../utils/message_box.dart';
 import '../create/create_note.dart';
+import '../view_edit_todo/todo_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -81,10 +83,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               const SizedBox(height: 5,),
               Obx((){
-                return   Text("Hi, ${authController.name.value.firstLetterCapital()}",style: const TextStyle(fontSize: 20,
-                  fontWeight: FontWeight.w100,
-                  color: Colors.white,
-                ),);
+                return AnimatedTextKit(
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                      'Hi, ${authController.name.value.firstLetterCapital()}',
+                      textStyle: const TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w100,
+                        color: ColorConstant.white,
+                      ),
+                      speed: const Duration(milliseconds: 500),
+                    ),
+                  ],
+                  totalRepeatCount: 4,
+                  pause: const Duration(milliseconds: 1000),
+                  displayFullTextOnTap: true,
+                  stopPauseOnTap: true,
+                );
               }),
               ],
             ),
@@ -184,13 +199,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onLongPress: (){
                                             utils.dialogBoxMessage("Confirmation", "Task Completed", () {
                                               //confirm
-                                              todoController.updateNoteStatus(snapshot.data!.docs[index]['ProductId'].toString(),true);
                                               Get.back();
+                                              todoController.updateNoteStatus(snapshot.data!.docs[index]['ProductId'].toString(),true);
                                             }, () {
-                                              //concel
+                                              //cancel
                                               Get.back();
                                             }, "Completed", "Cancel");
                                           },
+                                        onTap: (){
+                                          Get.to(ViewTodo(title: snapshot.data!.docs[index]['Title'].toString(),
+                                              description: snapshot.data!.docs[index]['Description'].toString(),
+                                              completed: snapshot.data!.docs[index]['Completed'],
+                                              creationDate: snapshot.data!.docs[index]['CreationDate'].toString(),
+                                            productId: snapshot.data!.docs[index]['ProductId'].toString(),));
+                                        },
                                         trailing: Icon(snapshot.data!.docs[index]['Completed'] ? Icons.task_alt : Icons.circle_outlined),
                                         title: Text(snapshot.data!.docs[index]['Title']),
                                         subtitle:  Text(

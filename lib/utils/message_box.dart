@@ -15,7 +15,7 @@ class Utils{
     );
   }
 
-  void dialogBoxMessage(String title,message,VoidCallback confirm,VoidCallback cancel, String buttonconfirm,buttoncancel){
+  void dialogBoxMessage(String title,message,VoidCallback confirm,cancel, String buttonconfirm,buttoncancel){
     Get.defaultDialog(
       title: title,
       middleText: message,

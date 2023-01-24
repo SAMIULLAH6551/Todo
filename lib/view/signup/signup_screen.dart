@@ -31,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
         iconTheme: const IconThemeData(
           color: ColorConstant.black,
         ),
@@ -54,13 +54,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
               fontWeight: FontWeight.w300,
             ),),
             const SizedBox(height: 50,),
-            TextFieldWidget(controller: name, hintText: 'Enter Your Name', onchanged: (String ) {  }, action: TextInputAction.next,),
-            TextFieldWidget(controller: email, hintText: 'Enter Your Email Address', onchanged: (String ) {  }, action: TextInputAction.next,),
-            TextFieldWidget(controller: password, hintText: 'Create a Password', onchanged: (String ) {  }, action: TextInputAction.next,),
-            TextFieldWidget(controller: confirmPassword, hintText: 'Confirm your Password', onchanged: (String ) {  }, action: TextInputAction.done,),
+            TextFieldWidget(
+              suffix: "",
+              secureText: false,
+              controller: name, hintText: 'Enter Your Name', onchanged: (String ) {  }, action: TextInputAction.next,),
+            TextFieldWidget(
+              suffix: "",
+              secureText: false,
+              controller: email, hintText: 'Enter Your Email Address', onchanged: (String ) {  }, action: TextInputAction.next,),
+            TextFieldWidget(
+              suffix: "",
+              maxlines: 1,
+              secureText: true,
+              controller: password, hintText: 'Create a Password', onchanged: (String ) {  }, action: TextInputAction.next,),
+            TextFieldWidget(
+              suffix: "",
+              maxlines: 1,
+              secureText: true,
+              controller: confirmPassword, hintText: 'Confirm your Password', onchanged: (String ) {  }, action: TextInputAction.done,),
             const SizedBox(height: 40,),
             ElevatedButtonWidget(child:const Text("Sign Up")  , function: () {
               authController.registerUser(name.text.toString(), email.text.toString(), password.text.toString());
+
             },),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
