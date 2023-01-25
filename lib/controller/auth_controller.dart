@@ -5,9 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/extentions/extentions.dart';
-import 'package:todo/providers/login_screen_provider.dart';
+import 'package:todo/providers/createTodo_provider.dart';
+import 'package:todo/providers/login_providers.dart';
 import 'package:todo/utils/message_box.dart';
 import 'package:todo/view/home/home_screen.dart';
+import '../providers/forgot_password_provider.dart';
+import '../providers/signup_providers.dart';
 import '../view/login/login_screen.dart';
 class AuthController extends GetxController{
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -19,7 +22,7 @@ class AuthController extends GetxController{
    auth.createUserWithEmailAndPassword(email: email, password: password).then((value){
      firestore.collection('Users').doc(auth.currentUser!.uid).set({
        "Id" : auth.currentUser!.uid.toString(),
-       "Name" : name,
+       "Name" : name.firstLetterCapital(),
        "Email" : email,
        "Password" : password,
        "CreationDate" : DateTime.now().customDate(),
@@ -53,13 +56,16 @@ class AuthController extends GetxController{
     final user = auth.currentUser;
     if(user != null){
       Timer(const Duration(seconds: 3), () {
+        ChangeNotifierProvider<CreateTodoProvider>(create: (context)=> CreateTodoProvider(),);
         Get.off(const HomeScreen());
       });
-
 
     }else{
       Timer(const Duration(seconds: 3), () {
         ChangeNotifierProvider<LoginProvider>(create: (context)=> LoginProvider(),);
+        ChangeNotifierProvider<SignupProvider>(create: (context)=> SignupProvider(),);
+        ChangeNotifierProvider<CreateTodoProvider>(create: (context)=> CreateTodoProvider(),);
+        ChangeNotifierProvider<ForgotPasswordProvider>(create: (context)=> ForgotPasswordProvider());
         Get.off(LoginScreen());
       });
     }

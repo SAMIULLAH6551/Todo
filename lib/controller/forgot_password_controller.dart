@@ -21,7 +21,6 @@ class ForgotPasswordController extends GetxController{
      utils.snackBarMessage('Error', error.toString());
     });
 
-
   }
 
 }

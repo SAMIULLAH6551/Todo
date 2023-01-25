@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/constants/color_constant.dart';
 class TextFieldWidget extends StatelessWidget {
-  TextFieldWidget({Key? key,required this.controller, required this.hintText, this.helperText, required this.onchanged, this.maxlines,required this.action, required this.suffix, required this.secureText}) : super(key: key);
+  TextFieldWidget({Key? key,required this.controller, required this.hintText, this.helperText, required this.onchanged, this.maxlines,required this.action, required this.suffix, required this.secureText, this.suffixtap}) : super(key: key);
 TextEditingController controller;
 String hintText;
 String? helperText;
@@ -11,6 +11,7 @@ int? maxlines;
 TextInputAction action;
 String suffix;
 bool secureText;
+VoidCallback? suffixtap;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +32,15 @@ bool secureText;
                 textInputAction: action,
                 controller: controller,
                 maxLines: maxlines,
-                // onChanged: onchanged,
+                onChanged: onchanged,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  suffix: Text(suffix,style: const TextStyle(
-                    fontSize: 14,
-                  ),),
+                  suffix: InkWell(
+                    onTap: suffixtap,
+                    child: Text(suffix,style: const TextStyle(
+                      fontSize: 14,
+                    ),),
+                  ),
                   hintText: hintText,
                   helperText: helperText,
                 ),

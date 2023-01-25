@@ -6,6 +6,7 @@ import 'package:todo/constants/color_constant.dart';
 import 'package:get/get.dart';
 import 'package:todo/controller/auth_controller.dart';
 import 'package:todo/controller/todo_controller.dart';
+import 'package:todo/extentions/extentions.dart';
 import 'package:todo/view/login/login_screen.dart';
 import '../../utils/message_box.dart';
 
@@ -85,7 +86,7 @@ class _SeeAllState extends State<SeeAll> {
                     ),
                     Obx(
                           () => Text(
-                        "Hi, ${authController.name.value}",
+                        "Hi, ${authController.name.value.firstLetterCapital()}",
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w100,
@@ -143,13 +144,17 @@ class _SeeAllState extends State<SeeAll> {
                                            utils.dialogBoxMessage("Delete", "Do You Want to Delete", () {
                                              // yes
                                            todoController.deleteNote(snapshot.data!.docs[index]['ProductId'].toString());
-                                           Get.back();
+                                           Navigator.pop(context);
                                            }, () {
-                                             // no
-                                             Get.back();
+                                             Navigator.pop(context);
                                            }, "Yes", "No");
                                          },
-                                       trailing: Icon(snapshot.data!.docs[index]['Completed'] ? Icons.task_alt : Icons.circle_outlined),
+                                       trailing: Column(
+                                         children: [
+                                           Icon(snapshot.data!.docs[index]['Completed'] ? Icons.task_alt : Icons.circle_outlined),
+                                           Text(snapshot.data!.docs[index]['CreationDate'].toString()),
+                                         ],
+                                       ),
                                        title: Text(snapshot.data!.docs[index]['Title']),
                                        subtitle:  Text(
                                            overflow: TextOverflow.ellipsis,

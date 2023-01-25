@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:todo/constants/color_constant.dart';
 import 'package:get/get.dart';
-import 'package:todo/controller/auth_controller.dart';
+
+import '../../controller/auth_controller.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -13,10 +14,11 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 AuthController authController = AuthController();
+
   @override
   void initState() {
    authController.checkUserIsLoggedIn();
-    super.initState();
+   super.initState();
   }
 
   @override

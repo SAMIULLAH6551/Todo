@@ -136,17 +136,11 @@ class _ViewTodoState extends State<ViewTodo> {
                     fontWeight: FontWeight.w300,
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    const Text("Completed : ",style: TextStyle(
-                      fontSize: 13,
-                    ),),
-                    Text(widget.completed.toString(),style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10,
-                    ),),
-                  ],
-                ),
+                widget.completed ? const Text("Completed",style: TextStyle(
+                  color: ColorConstant.green,
+                ),) : const Text("Incomplete",style: TextStyle(
+                  color: ColorConstant.red,
+                ),),
               ],
             ),
           ),

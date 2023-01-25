@@ -1,6 +1,5 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -171,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
              ),
            ),
           Expanded(
-            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            child: StreamBuilder(
               stream: todoController.getTodayTodo(),
               builder: (context, snapshot) {
                 if (snapshot.data!.docs.isNotEmpty) {
@@ -199,12 +198,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onLongPress: (){
                                             utils.dialogBoxMessage("Confirmation", "Task Completed", () {
                                               //confirm
-                                              Get.back();
+                                               Navigator.pop(context);
                                               todoController.updateNoteStatus(snapshot.data!.docs[index]['ProductId'].toString(),true);
                                             }, () {
                                               //cancel
-                                              Get.back();
-                                            }, "Completed", "Cancel");
+                                              Navigator.pop(context);
+                                              todoController.updateNoteStatus(snapshot.data!.docs[index]['ProductId'].toString(),false);
+                                            }, "Completed", "InComplete");
                                           },
                                         onTap: (){
                                           Get.to(ViewTodo(title: snapshot.data!.docs[index]['Title'].toString(),
