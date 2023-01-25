@@ -2,12 +2,13 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/extentions/extentions.dart';
 import 'package:todo/providers/createTodo_provider.dart';
 import 'package:todo/providers/login_providers.dart';
-import 'package:todo/utils/message_box.dart';
+import 'package:todo/utils/message_boxes/message_box.dart';
 import 'package:todo/view/home/home_screen.dart';
 import '../providers/forgot_password_provider.dart';
 import '../providers/signup_providers.dart';
@@ -17,8 +18,10 @@ class AuthController extends GetxController{
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   Utils utils = Utils();
   RxString name = "".obs;
+  RxBool loading = false.obs;
 
   void registerUser(String name,email,password){
+    loading.value = true;
    auth.createUserWithEmailAndPassword(email: email, password: password).then((value){
      firestore.collection('Users').doc(auth.currentUser!.uid).set({
        "Id" : auth.currentUser!.uid.toString(),
@@ -29,16 +32,22 @@ class AuthController extends GetxController{
      });
      utils.snackBarMessage("Success", "Account Created Success");
      Get.off(const HomeScreen());
+     loading.value = false;
    }).onError((error, stackTrace){
+     loading.value = false;
      utils.snackBarMessage("Error", error.toString());
    });
   }
 
   void loginUser(String email,password){
+    loading.value = true;
     auth.signInWithEmailAndPassword(email: email, password: password).then((value){
       utils.snackBarMessage("Success", "Logged in Successfully");
       Get.off(const HomeScreen());
+      loading.value = false;
     }).onError((error, stackTrace){
+      debugPrint(error.toString());
+      loading.value = false;
       utils.snackBarMessage("Error", error.toString());
     });
   }

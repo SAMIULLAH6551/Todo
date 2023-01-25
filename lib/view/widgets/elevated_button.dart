@@ -10,7 +10,7 @@ class ElevatedButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: Get.width / 2,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(

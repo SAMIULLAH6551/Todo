@@ -4,7 +4,7 @@ import 'package:todo/constants/color_constant.dart';
 import 'package:get/get.dart';
 import 'package:todo/controller/auth_controller.dart';
 import 'package:todo/providers/signup_providers.dart';
-import 'package:todo/utils/message_box.dart';
+import 'package:todo/utils/message_boxes/message_box.dart';
 import 'package:todo/view/login/login_screen.dart';
 import '../widgets/elevated_button.dart';
 import '../widgets/text_field.dart';
@@ -18,7 +18,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
 
-  bool isLoading = false;
+
   TextEditingController name = TextEditingController();
 
   TextEditingController email = TextEditingController();
@@ -68,7 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                          Padding(
-                          padding: EdgeInsets.only(right: 50),
+                          padding: const EdgeInsets.only(right: 50),
                           child: Text(
                             provider.nameMessage.toString(),
                             style: TextStyle(
@@ -91,7 +91,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                          Padding(
-                          padding: EdgeInsets.only(right: 50),
+                          padding: const EdgeInsets.only(right: 50),
                           child: Text(
                             provider.emailMessage.toString(),
                             style: TextStyle(
@@ -114,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                          Padding(
-                          padding: EdgeInsets.only(right: 50),
+                          padding: const EdgeInsets.only(right: 50),
                           child: Text(
                             provider.passwordMessage.toString(),
                             style: TextStyle(
@@ -138,7 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                          Padding(
-                          padding: EdgeInsets.only(right: 50),
+                          padding: const EdgeInsets.only(right: 50),
                           child: Text(
                             provider.confirmPasswordMessage.toString(),
                             style: TextStyle(
@@ -162,17 +162,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 40,),
 
                 provider.nameElegible == true && provider.emailElegible == true && provider.passwordElegible == true && provider.confirmPasswordElegible == true ?
-                ElevatedButtonWidget(child:const Text("Sign Up")  , function: () {
-                  authController.registerUser(name.text.toString(), email.text.toString(), password.text.toString());
-
-                },)   :     ElevatedButtonWidget(child:const Text("Sign Up")  , function: () {
+               Obx((){
+                 return  ElevatedButtonWidget(child:authController.loading.value == true ? const SizedBox(
+                   width: 25,
+                   height: 25,
+                   child: Center(
+                     child: CircularProgressIndicator(
+                       strokeWidth: 3,
+                       color: ColorConstant.white,
+                     ),
+                   ),
+                 ) : const Text("Sign Up") , function: () {
+                   authController.registerUser(name.text.toString(), email.text.toString(), password.text.toString());
+                 },);
+               })  :     ElevatedButtonWidget(child:const Text("Sign Up")  , function: () {
                   utils.snackBarMessage("Error", "Fields cannot be Empty");
                 },),
-
-                // ElevatedButtonWidget(child:const Text("Sign Up")  , function: () {
-                //   authController.registerUser(name.text.toString(), email.text.toString(), password.text.toString());
-                //
-                // },),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

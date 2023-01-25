@@ -3,9 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:todo/constants/color_constant.dart';
 import 'package:todo/constants/image_constant.dart';
 import 'package:get/get.dart';
+import 'package:todo/controller/auth_controller.dart';
 import 'package:todo/providers/forgot_password_provider.dart';
 import '../../controller/forgot_password_controller.dart';
-import '../../utils/message_box.dart';
+import '../../utils/message_boxes/message_box.dart';
 import '../widgets/elevated_button.dart';
 import '../widgets/text_field.dart';
 
@@ -14,6 +15,8 @@ class ForgotPassword extends StatelessWidget {
 
   TextEditingController email = TextEditingController();
   ForgotPasswordController forgot = ForgotPasswordController();
+  AuthController authController = AuthController();
+
   Utils utils = Utils();
 
   @override
@@ -91,13 +94,21 @@ class ForgotPassword extends StatelessWidget {
                       height: 30,
                     ),
                     provider.forgotPasswordElegible == true
-                        ? ElevatedButtonWidget(
-                            child: const Text('Forgot Password'),
-                            function: () {
-                              forgot.forgotPasswordMail(email.text.toString());
-                              Get.back();
-                            },
-                          )
+                        ? Obx(() => ElevatedButtonWidget(
+                      child:  forgot.loading.value == true ? const SizedBox(
+                        width: 25,
+                        height: 25,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                            color: ColorConstant.white,
+                          ),
+                        ),
+                      ) : const Text("Forgot Password"),
+                      function: () {
+                        forgot.forgotPasswordMail(email.text.toString());
+                      },
+                    ))
                         : ElevatedButtonWidget(
                             child: const Text('Forgot Password'),
                             function: () {

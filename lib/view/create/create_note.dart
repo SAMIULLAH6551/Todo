@@ -5,7 +5,7 @@ import 'package:todo/constants/image_constant.dart';
 import 'package:get/get.dart';
 import 'package:todo/controller/todo_controller.dart';
 import 'package:todo/providers/createTodo_provider.dart';
-import '../../utils/message_box.dart';
+import '../../utils/message_boxes/message_box.dart';
 import '../widgets/elevated_button.dart';
 import '../widgets/text_field.dart';
 
@@ -57,7 +57,7 @@ class CreateNote extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                      Padding(
-                      padding: EdgeInsets.only(right: 50),
+                      padding: const EdgeInsets.only(right: 50),
                       child: Text(
                         provider.titleMessage.toString(),
                         style: TextStyle(
@@ -80,7 +80,7 @@ class CreateNote extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(right: 50),
+                      padding: const EdgeInsets.only(right: 50),
                       child: Text(
                         provider.descriptionMessage.toString(),
                         style: TextStyle(
@@ -102,12 +102,20 @@ class CreateNote extends StatelessWidget {
                 const SizedBox(height: 10,),
 
                 provider.titleElegible == true && provider.descriptionElegible == true ?
-                ElevatedButtonWidget(child: const Text('Add to List'), function: () {
+                Obx(() => ElevatedButtonWidget(child: todoController.loading.value == true ? const SizedBox(
+                  width: 25,
+                  height: 25,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3,
+                      color: ColorConstant.white,
+                    ),
+                  ),
+                ) : const Text("Add to List"), function: () {
                   todoController.addNote(title.text.toString(), description.text.toString());
                   title.clear();
                   description.clear();
-                  Get.back();
-                },) :
+                },),) :
                 ElevatedButtonWidget(child: const Text('Add to List'), function: () {
                   utils.snackBarMessage("Error", "Fields cannot be Empty");
                 },),

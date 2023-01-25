@@ -8,7 +8,7 @@ import 'package:todo/controller/auth_controller.dart';
 import 'package:todo/controller/todo_controller.dart';
 import 'package:todo/extentions/extentions.dart';
 import 'package:todo/view/login/login_screen.dart';
-import '../../utils/message_box.dart';
+import '../../utils/message_boxes/message_box.dart';
 
 class SeeAll extends StatefulWidget {
   const SeeAll({Key? key}) : super(key: key);

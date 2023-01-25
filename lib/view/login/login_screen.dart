@@ -6,7 +6,7 @@ import 'package:todo/constants/image_constant.dart';
 import 'package:get/get.dart';
 import 'package:todo/controller/auth_controller.dart';
 import 'package:todo/providers/login_providers.dart';
-import 'package:todo/utils/message_box.dart';
+import 'package:todo/utils/message_boxes/message_box.dart';
 import 'package:todo/view/signup/signup_screen.dart';
 import '../forgot_password/forgot_password.dart';
 import '../widgets/elevated_button.dart';
@@ -150,16 +150,27 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       provider.emailElegible == true &&
                               provider.passwordElegible == true
-                          ? ElevatedButtonWidget(
-                              child: const Text('Sign In'),
+                          ? Obx((){
+                            return  ElevatedButtonWidget(
+                              child: authController.loading.value == true ? const SizedBox(
+                                width: 25,
+                                height: 25,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                    color: ColorConstant.white,
+                                  ),
+                                ),
+                              ) : const Text("Sign In"),
                               function: () {
                                 Timer(const Duration(seconds: 3), () {
                                   authController.loginUser(
-                                      email.text.toString(),
-                                      password.text.toString());
+                                    email.text.toString(),
+                                    password.text.toString(),);
                                 });
                               },
-                            )
+                            );
+                      })
                           : ElevatedButtonWidget(
                               child: const Text('Sign In'),
                               function: () {

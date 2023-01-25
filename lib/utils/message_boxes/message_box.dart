@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:todo/constants/color_constant.dart';
@@ -27,9 +26,6 @@ class Utils{
       confirm: TextButton(onPressed: confirm, child:  Text(buttonconfirm,style: TextStyle(color: ColorConstant.green),)),
       cancel: TextButton(onPressed: cancel, child:  Text(buttoncancel,style: TextStyle(color: ColorConstant.red),)),
     );
-
-
   }
-
 
   }
