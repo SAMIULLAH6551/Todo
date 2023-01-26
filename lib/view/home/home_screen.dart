@@ -29,8 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Utils utils = Utils();
 
   @override
-  void initState() {
+  void initState(){
     authController.currentUserData();
+    todoController.getTodayTodo();
     super.initState();
   }
   @override
@@ -164,7 +165,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-
     ],
     ),
                ),
